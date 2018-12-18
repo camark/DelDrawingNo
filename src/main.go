@@ -40,12 +40,20 @@ func main() {
 		log.Fatal(err)
 	}
 
-	//fmt.Println(icount)
-
 	if icount == 0 {
 		fmt.Println("Drawing no not exist!")
 		return
 	}
+
+	//fmt.Println(icount)
+	var drawGuid string
+	err = db.QueryRow("select guid from product_jiaotu where dan_no= ?", dno).Scan(&drawGuid)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+
 
 	stmt, err := db.Prepare(`delete from product_no where dan_no=?`)
 
@@ -56,6 +64,16 @@ func main() {
 	defer stmt.Close()
 
 	_, err = stmt.Exec(dno)
+
+	stmt_delguid, err := db.Prepare(`delete from product_tuzhi where sguid=?`)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer stmt_delguid.Close()
+
+	_, err = stmt.Exec(drawGuid)
 
 	fmt.Println("Delete Drawing No " + dno + " Success")
 }
