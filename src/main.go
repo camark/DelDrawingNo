@@ -51,6 +51,7 @@ func main() {
 
 	if err != nil {
 		log.Fatal(err)
+		return
 	}
 
 
@@ -59,6 +60,7 @@ func main() {
 
 	if err != nil {
 		log.Fatal(err)
+		return
 	}
 
 	defer stmt.Close()
@@ -69,6 +71,7 @@ func main() {
 
 	if err != nil {
 		log.Fatal(err)
+		return
 	}
 
 	defer stmt_delguid.Close()
